@@ -9,13 +9,13 @@ CREATE TABLE users (
     `id`    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     `first_name`  TEXT NOT NULL,
     `last_name`   TEXT NOT NULL,
-    `email`       TEXT NOT NULL,
+    `email`       TEXT NOT NULL UNIQUE,
     `display_name` TEXT NOT NULL
 );
 
 CREATE TABLE categories (
     `id`    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    `name`  TEXT NOT NULL
+    `name`  TEXT NOT NULL UNIQUE
 );
 
 CREATE TABLE posts (
@@ -32,7 +32,7 @@ CREATE TABLE posts (
 
 CREATE TABLE tags (
     `id`    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    `name`  TEXT NOT NULL
+    `name`  TEXT NOT NULL UNIQUE
 );
 
 CREATE TABLE post_tags (

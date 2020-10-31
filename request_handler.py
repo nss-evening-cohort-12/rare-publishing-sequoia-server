@@ -1,4 +1,5 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from users import create_user
 import json
 
 
@@ -70,8 +71,7 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if resource == 'register':
             print('POST to "register" endpoint')
-            #new_entry = create_user(post_body)
-            new_entry = post_body
+            new_entry = create_user(post_body)
         elif resource == 'posts':
             print('POST to "posts" endpoint')
 
