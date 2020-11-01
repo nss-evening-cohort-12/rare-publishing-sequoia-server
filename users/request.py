@@ -11,15 +11,16 @@ def register_user(new_user):
         # INSERT OR IGNORE - if the entry would not satisfy the UNIQUE constraint
         # (i.e. the email is not unique in the database) We just ignore the insert.
         #
-        # When we do this, the `lastrowid` result is 0, instead of a positive
-        # integer, and therefore we can check if the insert was "valid" or not.
+        # When we do this, the `lastrowid` result is 0, instead of a positive,
+        # non-zero integer, and therefore we can check if the insert was "valid" or not.
 
         db_cursor.execute("""
         INSERT OR IGNORE INTO users
             (first_name, last_name, email, display_name)
         VALUES
             (?, ?, ?, ?)
-        """, (new_user['first_name'], new_user['last_name'], new_user['email'], new_user['first_name'] + ' ' + new_user['last_name']))
+        """, (new_user['first_name'], new_user['last_name'], new_user['email'],
+              new_user['first_name'] + ' ' + new_user['last_name']))
 
         id = db_cursor.lastrowid
         new_user['id'] = id
