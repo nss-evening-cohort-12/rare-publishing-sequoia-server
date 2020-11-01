@@ -1,5 +1,5 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from users import register_user
+from users import login_user, register_user
 import json
 
 
@@ -67,14 +67,16 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         (resource, id) = self.parse_url(self.path)
 
-        new_entry = None
+        response = None
 
         if resource == 'register':
-            new_entry = register_user(post_body)
+            response = register_user(post_body)
+        elif resource == 'login':
+            response = login_user(post_body)
         elif resource == 'posts':
             print('POST to "posts" endpoint')
 
-        self.wfile.write(f"{new_entry}".encode())
+        self.wfile.write(f"{response}".encode())
 
     def do_OPTIONS(self):
         self.send_response(200)
