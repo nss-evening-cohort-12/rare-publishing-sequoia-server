@@ -24,9 +24,10 @@ def create_post(new_post):
 def get_all_posts():
     with sqlite3.connect("./rare.db") as conn:
         conn.row_factory = sqlite3.Row
-        db_cursor = conn.cursor
+        db_cursor = conn.cursor()
 
         db_cursor.execute("""
+        SELECT
             p.id,
             p.user_id,
             p.category_id,

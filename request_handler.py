@@ -1,6 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from users import login_user, register_user
-from posts import create_post
+from posts import create_post, get_all_posts
 import json
 
 
@@ -51,8 +51,7 @@ class HandleRequests(BaseHTTPRequestHandler):
             (resource, id) = parsed
 
             if resource == 'posts':
-                response1 = {'data': 'Not here... yet'}
-                response = json.dumps(response1)
+                response = get_all_posts()
 
         elif len(parsed) == 3:
             (resource, key, value) = parsed
