@@ -1,4 +1,5 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from tags import create_tag
 from users import login_user, register_user
 import json
 
@@ -75,6 +76,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             response = login_user(post_body)
         elif resource == 'posts':
             print('POST to "posts" endpoint')
+        elif resource == 'tags':
+            response = create_tag(post_body)
 
         self.wfile.write(f"{response}".encode())
 
