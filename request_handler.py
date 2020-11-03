@@ -1,6 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from tags import create_tag
 from users import login_user, register_user
+from posts import create_post
 import json
 
 
@@ -75,7 +76,7 @@ class HandleRequests(BaseHTTPRequestHandler):
         elif resource == 'login':
             response = login_user(post_body)
         elif resource == 'posts':
-            print('POST to "posts" endpoint')
+            response = create_post(post_body)
         elif resource == 'tags':
             response = create_tag(post_body)
 
