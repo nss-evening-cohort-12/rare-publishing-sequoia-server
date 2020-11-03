@@ -1,4 +1,5 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from post_tags import tag_post
 from tags import create_tag
 from users import login_user, register_user
 from posts import create_post
@@ -79,6 +80,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             response = create_post(post_body)
         elif resource == 'tags':
             response = create_tag(post_body)
+        elif resource == 'newposttag':
+            response = tag_post(post_body)
 
         self.wfile.write(f"{response}".encode())
 
