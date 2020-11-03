@@ -44,6 +44,7 @@ def get_all_posts():
         FROM Posts p
         JOIN users u
             ON u.id = p.user_id
+        ORDER BY p.publication_date DESC
         """)
 
         posts = []
