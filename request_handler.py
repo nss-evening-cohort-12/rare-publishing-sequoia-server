@@ -69,14 +69,13 @@ class HandleRequests(BaseHTTPRequestHandler):
         (resource, id) = self.parse_url(self.path)
 
         response = None
-        new_post = None
 
         if resource == 'register':
             response = register_user(post_body)
         elif resource == 'login':
             response = login_user(post_body)
         elif resource == 'posts':
-            new_post = create_post(post_body)
+            response = create_post(post_body)
 
         self.wfile.write(f"{response}".encode())
 
