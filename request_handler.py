@@ -1,5 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from users import login_user, register_user
+from posts import create_post
 import json
 
 
@@ -68,13 +69,14 @@ class HandleRequests(BaseHTTPRequestHandler):
         (resource, id) = self.parse_url(self.path)
 
         response = None
+        new_post = None
 
         if resource == 'register':
             response = register_user(post_body)
         elif resource == 'login':
             response = login_user(post_body)
         elif resource == 'posts':
-            print('POST to "posts" endpoint')
+            new_post = create_post(post_body)
 
         self.wfile.write(f"{response}".encode())
 
