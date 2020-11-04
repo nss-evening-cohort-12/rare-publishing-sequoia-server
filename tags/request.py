@@ -1,7 +1,7 @@
 import sqlite3
 import json
 
-#from models import Tag
+from models import Tag
 
 
 def create_tag(new_tag):
@@ -24,3 +24,28 @@ def create_tag(new_tag):
             is_valid = False
 
     return json.dumps({'valid': is_valid})
+
+
+def get_all_tags():
+    with sqlite3.connect('./rare.db') as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        SELECT
+            id,
+            name
+        FROM
+            tags
+        """)
+
+        tags = []
+
+        dataset = db_cursor.fetchall()
+
+        for row in dataset:
+            tag = Tag(row['id'], row['name'])
+
+            tags.append(tag.__dict__)
+
+    return json.dumps(tags)

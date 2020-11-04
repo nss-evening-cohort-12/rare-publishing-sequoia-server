@@ -1,6 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from post_tags import tag_post
-from tags import create_tag
+from tags import create_tag, get_all_tags
 from users import login_user, register_user
 from posts import create_post, get_all_posts, get_posts_by_user
 import json
@@ -54,6 +54,8 @@ class HandleRequests(BaseHTTPRequestHandler):
 
             if resource == 'posts':
                 response = get_all_posts()
+            elif resource == 'tags':
+                response = get_all_tags()
 
         elif len(parsed) == 3:
             (resource, key, value) = parsed
