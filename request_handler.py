@@ -2,7 +2,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from post_tags import tag_post
 from tags import create_tag
 from users import login_user, register_user
-from posts import create_post, get_all_posts
+from posts import create_post, get_all_posts, get_posts_by_user
 import json
 
 
@@ -57,6 +57,9 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         elif len(parsed) == 3:
             (resource, key, value) = parsed
+
+            if key == "user_id" and resource == "posts":
+                response = get_posts_by_user(value)
 
         self.wfile.write(response.encode())
 
