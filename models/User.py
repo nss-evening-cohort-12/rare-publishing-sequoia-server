@@ -4,4 +4,4 @@ class User():
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
-        self.display_name = display_name
+        self.display_name = f'{self.first_name} {self.last_name}'

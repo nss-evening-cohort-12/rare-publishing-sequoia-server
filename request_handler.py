@@ -1,5 +1,8 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from post_tags import tag_post
+from tags import create_tag, get_all_tags
 from users import login_user, register_user
+from posts import create_post, get_all_posts
 import json
 
 
@@ -50,8 +53,9 @@ class HandleRequests(BaseHTTPRequestHandler):
             (resource, id) = parsed
 
             if resource == 'posts':
-                response1 = {'data': 'Not here... yet'}
-                response = json.dumps(response1)
+                response = get_all_posts()
+            elif resource == 'tags':
+                response = get_all_tags()
 
         elif len(parsed) == 3:
             (resource, key, value) = parsed
@@ -74,7 +78,11 @@ class HandleRequests(BaseHTTPRequestHandler):
         elif resource == 'login':
             response = login_user(post_body)
         elif resource == 'posts':
-            print('POST to "posts" endpoint')
+            response = create_post(post_body)
+        elif resource == 'tags':
+            response = create_tag(post_body)
+        elif resource == 'newposttag':
+            response = tag_post(post_body)
 
         self.wfile.write(f"{response}".encode())
 
