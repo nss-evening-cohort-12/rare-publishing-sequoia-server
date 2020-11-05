@@ -98,3 +98,37 @@ def get_posts_by_user(user_id):
             posts.append(post.__dict__)
 
     return json.dumps(posts)
+
+def get_post_by_id(id):
+    with sqlite3.connect("./rare.db") as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        SELECT
+            p.id,
+            p.user_id,
+            p.category_id,
+            p.title,
+            p.content,
+            p.publication_date,
+            p.header_img,
+            u.id,
+            u.first_name,
+            u.last_name,
+            u.display_name,
+            u.email
+        FROM Posts p
+        JOIN users u
+            ON u.id = p.user_id
+        WHERE p.id = ?
+        """, (id , ))
+
+        data = db_cursor.fetchone()
+
+        post = Post(data['id'], data['user_id'], data['category_id'], data['title'], data['content'], data['publication_date'], data['header_img'])
+        user = User(data['user_id'], data['first_name'], data['last_name'], data['email'], data['display_name'])
+
+        post.user = user.__dict__
+    
+        return json.dumps(post.__dict__)
