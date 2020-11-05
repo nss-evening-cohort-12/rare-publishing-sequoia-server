@@ -86,7 +86,7 @@ class HandleRequests(BaseHTTPRequestHandler):
         elif resource == 'newposttag':
             response = tag_post(post_body)
         elif resource == 'categories':
-            response = create_category (post_body)    
+            response = create_category(post_body)    
 
         self.wfile.write(f"{response}".encode())
 
