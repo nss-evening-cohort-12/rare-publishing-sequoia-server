@@ -56,7 +56,7 @@ class HandleRequests(BaseHTTPRequestHandler):
                 if id is not None:
                     response = get_post_by_id(id)
                 else:
-                    response = get_all_posts
+                    response = get_all_posts()
             elif resource == 'tags':
                 response = get_all_tags()
 
