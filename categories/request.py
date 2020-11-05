@@ -8,11 +8,11 @@ def create_category(new_category):
       db_cursor = conn.cursor()
 
       db_cursor.execute("""
-      INSERT INTO category
-        ( name, id )
+      INSERT INTO categories
+        ( name )
       VALUES
-        (?, ?, ?, ?, ?, ?);
-      """, (new_category['name'], new_category['id'], ))
+        (?)
+      """, (new_category['name'], ))
 
       id = db_cursor.lastrowid
 
