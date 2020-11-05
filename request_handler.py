@@ -1,8 +1,10 @@
+from categories.request import create_category
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from post_tags import tag_post
 from tags import create_tag, get_all_tags
 from users import login_user, register_user
 from posts import create_post, get_all_posts
+from categories import create_category
 import json
 
 
@@ -83,6 +85,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             response = create_tag(post_body)
         elif resource == 'newposttag':
             response = tag_post(post_body)
+        elif resource == 'categories':
+            response = create_category (post_body)    
 
         self.wfile.write(f"{response}".encode())
 

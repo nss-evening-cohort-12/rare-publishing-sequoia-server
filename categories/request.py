@@ -9,6 +9,14 @@ def create_category(new_category):
 
       db_cursor.execute("""
       INSERT INTO category
-        ( )
-      )
+        ( name, id )
+      VALUES
+        (?, ?, ?, ?, ?, ?);
+      """, (new_category['name'], new_category['id'], ))
+
+      id = db_cursor.lastrowid
+
+      new_category['id'] = id
+
+    return json.dumps(new_category)     
       
