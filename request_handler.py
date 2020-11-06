@@ -2,7 +2,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from post_tags import tag_post
 from tags import create_tag, get_all_tags
 from users import login_user, register_user
-from posts import create_post, get_all_posts, get_posts_by_user, get_post_by_id
+from posts import create_post, get_all_posts, get_posts_by_user, get_post_by_id, delete_post
 import json
 
 
@@ -91,6 +91,16 @@ class HandleRequests(BaseHTTPRequestHandler):
             response = tag_post(post_body)
 
         self.wfile.write(f"{response}".encode())
+
+    def do_DELETE(self):
+        self._set_headers(204)
+
+        (resource, id) = self.parse_url(self.path)
+
+        if resource == "posts":
+            delete_post(id)
+
+        self.wfile.write("".encode()) 
 
     def do_OPTIONS(self):
         self.send_response(200)
