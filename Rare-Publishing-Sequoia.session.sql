@@ -69,7 +69,7 @@ INSERT INTO `comments` VALUES (null, 'Second comment subject', 'Second comment c
 
 
 SELECT * FROM users;
-SELECT * FROM categories;
+SELECT * FROM categories ORDER BY id DESC ;
 SELECT * FROM posts;
 SELECT * FROM tags;
 SELECT * FROM post_tags;
