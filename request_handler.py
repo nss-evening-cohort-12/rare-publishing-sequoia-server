@@ -3,8 +3,12 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from post_tags import tag_post
 from tags import create_tag, get_all_tags
 from users import login_user, register_user
-from posts import create_post, get_all_posts
+
+
 from categories import create_category
+
+from posts import create_post, get_all_posts, get_posts_by_user, get_post_by_id
+
 import json
 
 
@@ -55,12 +59,18 @@ class HandleRequests(BaseHTTPRequestHandler):
             (resource, id) = parsed
 
             if resource == 'posts':
-                response = get_all_posts()
+                if id is not None:
+                    response = get_post_by_id(id)
+                else:
+                    response = get_all_posts()
             elif resource == 'tags':
                 response = get_all_tags()
 
         elif len(parsed) == 3:
             (resource, key, value) = parsed
+
+            if key == "user_id" and resource == "posts":
+                response = get_posts_by_user(value)
 
         self.wfile.write(response.encode())
 
