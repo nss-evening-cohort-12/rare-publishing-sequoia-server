@@ -3,7 +3,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from post_tags import tag_post
 from tags import create_tag, get_all_tags
 from users import login_user, register_user
-from posts import create_post, get_all_posts, get_posts_by_user, get_post_by_id, delete_post
+from posts import create_post, get_all_posts, get_posts_by_user, get_post_by_id, delete_post, update_post
 from categories import create_category
 import json
 
@@ -96,6 +96,26 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         self.wfile.write(f"{response}".encode())
 
+    def do_PUT(self):
+        content_len = int(self.headers.get('content-length', 0))
+        post_body = self.rfile.read(content_len)
+        post_body = json.loads(post_body)
+
+        (resource, id) = self.parse_url(self.path)
+
+        success = False
+
+        if resource == "posts":
+            success = update_post(id, post_body)
+
+        if success:
+            self._set_headers(204)
+        else:
+            self._set_headers(404)
+
+        self.wfile.write("".encode())
+
+
     def do_DELETE(self):
         self._set_headers(204)
 
@@ -120,3 +140,6 @@ def main():
     host = ''
     port = 8088
     HTTPServer((host, port), HandleRequests).serve_forever()
+
+if __name__ == "__main__":
+    main()
