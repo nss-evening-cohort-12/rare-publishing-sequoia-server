@@ -1,4 +1,4 @@
-from categories.request import create_category
+from categories.request import create_category, get_all_categories
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from post_tags import tag_post
 from tags import create_tag, get_all_tags
@@ -61,12 +61,16 @@ class HandleRequests(BaseHTTPRequestHandler):
                     response = get_all_posts()
             elif resource == 'tags':
                 response = get_all_tags()
+            elif resource == 'categories':
+             response = get_all_categories()    
 
         elif len(parsed) == 3:
             (resource, key, value) = parsed
 
             if key == "user_id" and resource == "posts":
                 response = get_posts_by_user(value)
+
+                
 
         self.wfile.write(response.encode())
 
