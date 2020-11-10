@@ -8,3 +8,4 @@ class Post:
         self.publication_date = publication_date
         self.header_img = header_img
         self.user = None
+        self.category = None
