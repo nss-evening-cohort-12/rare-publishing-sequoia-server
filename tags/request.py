@@ -4,6 +4,19 @@ import json
 from models import Tag
 
 
+def delete_tag(tag_id):
+    with sqlite3.connect('./rare.db') as conn:
+        conn.execute("PRAGMA foreign_keys = 1")
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        DELETE FROM
+            tags
+        WHERE
+            id = ? 
+        """, (tag_id,))
+
+
 def create_tag(new_tag):
     with sqlite3.connect('./rare.db') as conn:
         db_cursor = conn.cursor()
