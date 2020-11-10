@@ -1,9 +1,11 @@
+PRAGMA foreign_keys = OFF;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS categories;
 DROP TABLE IF EXISTS posts;
 DROP TABLE IF EXISTS post_tags;
 DROP TABLE IF EXISTS tags;
 DROP TABLE IF EXISTS comments;
+
 
 CREATE TABLE users (
     `id`    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -39,8 +41,9 @@ CREATE TABLE post_tags (
     `id`    INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     `post_id` INTEGER NOT NULL,
     `tag_id` INTEGER NOT NULL,
-    FOREIGN KEY(`post_id`) REFERENCES `posts`(`id`),
-    FOREIGN KEY(`tag_id`) REFERENCES `tags`(`id`)
+    UNIQUE(post_id, tag_id),
+    CONSTRAINT fk_post_id FOREIGN KEY(`post_id`) REFERENCES `posts`(`id`) ON DELETE CASCADE,
+    CONSTRAINT fk_tag_id FOREIGN KEY(`tag_id`) REFERENCES `tags`(`id`) ON DELETE CASCADE
 );
 
 CREATE TABLE comments (
@@ -67,9 +70,10 @@ INSERT INTO `tags` VALUES (null, 'Second tag');
 INSERT INTO `post_tags` VALUES (null, 2, 2);
 INSERT INTO `comments` VALUES (null, 'Second comment subject', 'Second comment content is here!', 2, 2);
 
+PRAGMA foreign_keys = ON;
 
 SELECT * FROM users;
-SELECT * FROM categories ORDER BY id DESC ;
+SELECT * FROM categories;
 SELECT * FROM posts;
 SELECT * FROM tags;
 SELECT * FROM post_tags;
