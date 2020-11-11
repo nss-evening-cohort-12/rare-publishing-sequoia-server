@@ -4,7 +4,7 @@ from post_tags import tag_post, get_all_post_tags, get_post_tags_by_post_id, rem
 from tags import create_tag, delete_tag, get_all_tags
 from users import login_user, register_user
 from posts import create_post, get_all_posts, get_posts_by_user, get_post_by_id, delete_post, update_post
-from categories import create_category
+from categories import create_category, get_category_by_id
 import json
 
 
@@ -62,7 +62,10 @@ class HandleRequests(BaseHTTPRequestHandler):
             elif resource == 'tags':
                 response = get_all_tags()
             elif resource == 'categories':
-                response = get_all_categories()
+                if id is not None:
+                    response = get_category_by_id(id)
+                else:
+                     response = get_all_categories()
             elif resource == 'post_tags':
                 if id is not None:
                     response = get_post_tags_by_post_id(id)
