@@ -43,3 +43,4 @@ def get_all_categories():
             categories.append(category.__dict__)
 
      return json.dumps(categories)      
+
