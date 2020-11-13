@@ -5,6 +5,7 @@ from tags import create_tag, delete_tag, get_all_tags
 from users import login_user, register_user
 from posts import create_post, get_all_posts, get_posts_by_user, get_post_by_id, delete_post, update_post
 from categories import create_category, get_category_by_id
+from comments import create_comment
 import json
 
 
@@ -104,6 +105,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             response = tag_post(post_body)
         elif resource == 'categories':
             response = create_category(post_body)
+        elif resource == 'comments':
+            response = create_comment(post_body)
 
         self.wfile.write(f"{response}".encode())
 
