@@ -65,3 +65,24 @@ def get_category_by_id(id):
         category = Category(data['name'], data['id'])
 
         return json.dumps(category.__dict__)
+
+def update_category(id, new_category):
+    with sqlite3.connect("./rare.db") as conn:
+        conn.row_factory = sqlite3.Row
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        UPDATE Category
+            SET
+                name = ?,
+                id = ?
+        WHERE id = ?
+        """, (new_category['name'], id, ))
+
+        rows_affected = db_cursor.rowcount
+
+    if rows_affected == 0:
+        return False
+    else:
+        return True    
+
