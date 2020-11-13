@@ -14,7 +14,7 @@ def update_tag(tag_id, post_body):
             name = ?
         WHERE
             id = ?
-        """, (post_body['name'], tag_id))
+        """, (post_body['tag_name'], tag_id))
 
         rows_affected = db_cursor.rowcount
 
