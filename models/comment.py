@@ -6,3 +6,4 @@ class Comment():
         self.post_id = post_id
         self.user_id = user_id
         self.publication_date = publication_date
+        self.user = None
