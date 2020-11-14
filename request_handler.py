@@ -1,4 +1,4 @@
-from categories.request import create_category, get_all_categories, update_category
+from categories.request import create_category, delete_category, get_all_categories, update_category
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from post_tags import tag_post, get_all_post_tags, get_post_tags_by_post_id, remove_post_tag
 from tags import create_tag, delete_tag, get_all_tags, get_tag_by_id, update_tag
@@ -156,6 +156,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             remove_post_tag(id)
         elif resource == "tag":
             delete_tag(id)
+        elif resource == "categories":
+            delete_category(id)
         elif resource == "comments":
             delete_comment(id)
 

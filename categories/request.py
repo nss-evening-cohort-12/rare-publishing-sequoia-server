@@ -87,4 +87,14 @@ def update_category(id, new_category):
     if rows_affected == 0:
         return False
     else:
+        return True    
+
+def delete_category(id):
+    with sqlite3.connect("./rare.db") as conn:
+        db_cursor = conn.cursor()
+
+        db_cursor.execute("""
+        DELETE FROM Categories
+        WHERE id = ?
+        """, (id, ))
         return True
