@@ -1,10 +1,11 @@
 from categories.request import create_category, get_all_categories, update_category
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from post_tags import tag_post, get_all_post_tags, get_post_tags_by_post_id, remove_post_tag
-from tags import create_tag, delete_tag, get_all_tags
+from tags import create_tag, delete_tag, get_all_tags, get_tag_by_id, update_tag
 from users import login_user, register_user
 from posts import create_post, get_all_posts, get_posts_by_user, get_post_by_id, delete_post, update_post
 from categories import create_category, get_category_by_id
+from comments import create_comment, get_comments_by_post_id
 import json
 
 
@@ -56,16 +57,20 @@ class HandleRequests(BaseHTTPRequestHandler):
 
             if resource == 'posts':
                 if id is not None:
+                    print(id)
                     response = get_post_by_id(id)
                 else:
                     response = get_all_posts()
             elif resource == 'tags':
-                response = get_all_tags()
+                if id is not None:
+                    response = get_tag_by_id(id)
+                else:
+                    response = get_all_tags()
             elif resource == 'categories':
                 if id is not None:
                     response = get_category_by_id(id)
                 else:
-                     response = get_all_categories()
+                    response = get_all_categories()
             elif resource == 'post_tags':
                 if id is not None:
                     response = get_post_tags_by_post_id(id)
@@ -77,6 +82,8 @@ class HandleRequests(BaseHTTPRequestHandler):
 
             if key == "user_id" and resource == "posts":
                 response = get_posts_by_user(value)
+            elif key == "post_id" and resource == "comments":
+                response = get_comments_by_post_id(value)
 
         self.wfile.write(response.encode())
 
@@ -103,6 +110,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             response = tag_post(post_body)
         elif resource == 'categories':
             response = create_category(post_body)
+        elif resource == 'comments':
+            response = create_comment(post_body)
 
         self.wfile.write(f"{response}".encode())
 
@@ -117,6 +126,8 @@ class HandleRequests(BaseHTTPRequestHandler):
 
         if resource == "posts":
             success = update_post(id, post_body)
+        elif resource == "tags":
+            success = update_tag(id, post_body)
 
         if resource == "categories":
             success = update_category(id, post_body)    

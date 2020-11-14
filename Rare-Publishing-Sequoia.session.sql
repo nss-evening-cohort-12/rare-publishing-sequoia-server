@@ -52,6 +52,7 @@ CREATE TABLE comments (
     `content` TEXT NOT NULL,
     `post_id` INTEGER NOT NULL,
     `user_id` INTEGER NOT NULL,
+    `publication_date` INTEGER NOT NULL,
     FOREIGN KEY(`post_id`) REFERENCES `posts`(`id`),
     FOREIGN KEY(`user_id`) REFERENCES `users`(`id`)
 );
@@ -61,14 +62,14 @@ INSERT INTO `categories` VALUES (null, 'First Category');
 INSERT INTO `posts` VALUES (null, 'First Post Title', 'First post content is here!', 20201031, null, 1, 1);
 INSERT INTO `tags` VALUES (null, 'First tag');
 INSERT INTO `post_tags` VALUES (null, 1, 1);
-INSERT INTO `comments` VALUES (null, 'First comment subject', 'First comment content is here!', 1, 1);
+INSERT INTO `comments` VALUES (null, 'First comment subject', 'First comment content is here!', 1, 1, 1605233953021);
 
 INSERT INTO `users` VALUES (null, 'Second', 'Tester', 'secondTester@email.com', 'Second Tester');
 INSERT INTO `categories` VALUES (null, 'Second Category');
 INSERT INTO `posts` VALUES (null, 'Second Post Title', 'Second post content is here!', 20201031, null, 2, 2);
 INSERT INTO `tags` VALUES (null, 'Second tag');
 INSERT INTO `post_tags` VALUES (null, 2, 2);
-INSERT INTO `comments` VALUES (null, 'Second comment subject', 'Second comment content is here!', 2, 2);
+INSERT INTO `comments` VALUES (null, 'Second comment subject', 'Second comment content is here!', 2, 2, 1605233953021);
 
 PRAGMA foreign_keys = ON;
 
