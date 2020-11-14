@@ -5,7 +5,7 @@ from tags import create_tag, delete_tag, get_all_tags, get_tag_by_id, update_tag
 from users import login_user, register_user
 from posts import create_post, get_all_posts, get_posts_by_user, get_post_by_id, delete_post, update_post
 from categories import create_category, get_category_by_id
-from comments import create_comment, get_comments_by_post_id
+from comments import create_comment, get_comments_by_post_id, delete_comment
 import json
 
 
@@ -150,6 +150,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             remove_post_tag(id)
         elif resource == "tag":
             delete_tag(id)
+        elif resource == "comments":
+            delete_comment(id)
 
         self.wfile.write("".encode())
 
