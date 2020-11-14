@@ -72,10 +72,9 @@ def update_category(id, new_category):
         db_cursor = conn.cursor()
 
         db_cursor.execute("""
-        UPDATE Category
+        UPDATE Categories
             SET
-                name = ?,
-                id = ?
+                name = ?
         WHERE id = ?
         """, (new_category['name'], id, ))
 
