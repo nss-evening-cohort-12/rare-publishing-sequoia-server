@@ -97,6 +97,7 @@ def get_posts_by_user(user_id):
         JOIN categories c
             ON cat_id = p.category_id
         WHERE p.user_id = ?
+        ORDER BY p.publication_date DESC
         """, ( user_id, ))
 
         posts = []

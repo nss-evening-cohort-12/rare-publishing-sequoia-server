@@ -3,25 +3,27 @@ import json
 
 from models.category import Category
 
+
 def create_category(new_category):
     with sqlite3.connect("./rare.db") as conn:
-      db_cursor = conn.cursor()
+        db_cursor = conn.cursor()
 
-      db_cursor.execute("""
+        db_cursor.execute("""
       INSERT INTO categories
         ( name )
       VALUES
         (?)
       """, (new_category['name'], ))
 
-      id = db_cursor.lastrowid
+        id = db_cursor.lastrowid
 
-      new_category['id'] = id
+        new_category['id'] = id
 
     return json.dumps(new_category)
 
-def get_all_categories():        
-     with sqlite3.connect("./rare.db") as conn:
+
+def get_all_categories():
+    with sqlite3.connect("./rare.db") as conn:
         conn.row_factory = sqlite3.Row
         db_cursor = conn.cursor()
 
@@ -31,18 +33,19 @@ def get_all_categories():
             name
         FROM
             categories
+        ORDER BY name COLLATE NOCASE ASC
         """)
-        
+
         categories = []
-        
+
         dataset = db_cursor.fetchall()
 
         for row in dataset:
             category = Category(row['name'], row['id'])
-            
+
             categories.append(category.__dict__)
 
-     return json.dumps(categories)      
+    return json.dumps(categories)
 
 
 def get_category_by_id(id):
@@ -58,13 +61,14 @@ def get_category_by_id(id):
             categories c
         WHERE
             c.id = ?
-        """, ( id, ))
+        """, (id, ))
 
         data = db_cursor.fetchone()
 
         category = Category(data['name'], data['id'])
 
         return json.dumps(category.__dict__)
+
 
 def update_category(id, new_category):
     with sqlite3.connect("./rare.db") as conn:
@@ -93,3 +97,4 @@ def delete_category(id):
         DELETE FROM Categories
         WHERE id = ?
         """, (id, ))
+        return True
