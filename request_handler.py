@@ -5,7 +5,7 @@ from tags import create_tag, delete_tag, get_all_tags, get_tag_by_id, update_tag
 from users import login_user, register_user
 from posts import create_post, get_all_posts, get_posts_by_user, get_post_by_id, delete_post, update_post
 from categories import create_category, get_category_by_id
-from comments import create_comment, get_comments_by_post_id, delete_comment
+from comments import create_comment, get_comments_by_post_id, delete_comment, update_comment, get_comment_by_id
 import json
 
 
@@ -57,7 +57,6 @@ class HandleRequests(BaseHTTPRequestHandler):
 
             if resource == 'posts':
                 if id is not None:
-                    print(id)
                     response = get_post_by_id(id)
                 else:
                     response = get_all_posts()
@@ -76,6 +75,11 @@ class HandleRequests(BaseHTTPRequestHandler):
                     response = get_post_tags_by_post_id(id)
                 else:
                     response = get_all_post_tags()
+            elif resource == 'comments':
+                if id is not None:
+                    response = get_comment_by_id(id)
+                else:
+                    response = get_all_categories()
 
         elif len(parsed) == 3:
             (resource, key, value) = parsed
@@ -128,6 +132,8 @@ class HandleRequests(BaseHTTPRequestHandler):
             success = update_post(id, post_body)
         elif resource == "tags":
             success = update_tag(id, post_body)
+        elif resource == "comments":
+            success = update_comment(id, post_body)       
 
         if resource == "categories":
             success = update_category(id, post_body)    
